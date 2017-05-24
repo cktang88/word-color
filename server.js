@@ -3,7 +3,9 @@ var express = require('express'),
   port = 8000;
 
 var bodyParser = require('body-parser');
-var Scraper = require('./scrape.js');
+var Scraper = require('./scrape.js'),
+  getPixels = require('get-pixels'),
+  quantizer = require('./quantize.js');
 
 var server = require('http').Server(app);
 
@@ -26,10 +28,21 @@ server.listen(port, function() {
 app.post('/', function(req, res) {
   var word = req.body.word;
   console.log(word);
-  var picArray = getImages(word);
-});
+  Scraper.getImages(word, function(urls) {
+    //res.json({picurls: urls});
+    console.log(urls.length + ' images found.');
 
-//get google images
-var getImages = function(searchword) {
-  return Scraper.getBingImages(searchword);
-}
+    getPixels(urls[3], function(err, pixels) {
+      if (err) {
+        console.log("Bad image path")
+        return;
+      }
+      //pixels is an 'ndarray' --> pixels.data = converts to 1d array
+      console.log("got pixels", pixels.data);
+      console.log(pixels.data[0]);
+      var palette = quantizer.quantize(pixels.data, 8).palette();
+      console.log(palette);
+    });
+  });
+
+});
