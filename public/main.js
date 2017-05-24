@@ -7,7 +7,7 @@ var submitWord = function() {
   $.post('/', {
     word: this.word
   }, function(res) {
-    //console.log(res.picurls);
+    console.log(res.numImages);
   });
   //getImages(this.word);
 }
