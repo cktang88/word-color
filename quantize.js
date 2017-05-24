@@ -381,7 +381,7 @@ var MMCQ = (function() {
           // set dimensions
           vbox1[dim2] = d2;
           vbox2[dim1] = vbox1[dim2] + 1;
-          console.log('vbox counts:', vbox.count(), vbox1.count(), vbox2.count());
+          //console.log('vbox counts:', vbox.count(), vbox1.count(), vbox2.count());
           return [vbox1, vbox2];
         }
       }
