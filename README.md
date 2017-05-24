@@ -1,9 +1,11 @@
 # Colorful Words
 
-Type in a word. Get its associated color palette.
-
+:art: :fire: :zap: Creates word-color associations.
 ***<pic here>***
 
+### Try it out!
+
+Go ahead. Type in a word. Get its associated color palette.
 Try it ***[here](link)***
 
 ### How it works
