@@ -11,15 +11,16 @@
 </head>
 
 <body>
-  Word Color
+
   <div>
-    <input id='wordinput'></input>
+    <h2>Word Color</h2>
+    <input id='wordinput' placeholder='eg. watermelon'></input>
     <button id='wordbutton' onclick='submitWord()'>Colorize!</button>
     <div class="progress-wrap progress" progress-percent="50">
       <div class="progress-bar progress"></div>
     </div>
   </div>
-  <canvas id='canvas' height='400' width='800'></canvas>
+  <canvas id='canvas' height='0' width='0'></canvas>
   <!--- lightweight alternative to jQuery -->
   <script src='http://zeptojs.com/zepto.min.js'></script>
   <script src='main.js'></script>
@@ -33,6 +34,24 @@
     font-family: Roboto;
     font-size: 16pt;
     background-color: #e6e6e6;
+    padding-left: 1em;
+  }
+
+  input,
+  button {
+    font-family: Roboto;
+    font-size: 16pt;
+  }
+
+  button, input {
+    border-width: 4pt solid;
+    border-color: #000000;
+    border-radius: .2em;
+    background-color: inherit;
+  }
+
+  button:active {
+    border-radius: 2em;
   }
 
   canvas {

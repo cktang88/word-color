@@ -25,6 +25,10 @@ function refreshColors() {
     if (!res.data || res.data === [])
       return;
 
+    //dynamically resize canvas
+    canvas.width = res.data.length * 40;
+    canvas.height = res.data[0].length * 40;
+
     //get the palettes
     var arr, c;
     for (var i = 0; i < res.data.length; i++) {
