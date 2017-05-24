@@ -31,9 +31,5 @@ app.post('/', function(req, res) {
 
 //get google images
 var getImages = function(searchword) {
-  return Scraper.getBingImages({
-    keyword: searchword,
-    num: 1,
-    details: false
-  });
+  return Scraper.getBingImages(searchword);
 }

@@ -1,49 +1,42 @@
 var request = require('request');
+const cheerio = require('cheerio');
 /**
  * Get the image src for all links, options.keyword is required.
  */
-var getBingImages = function(options) {
-  //var self = this;
-  var results = [];
-
-  if (!options || !options.keyword) {
-    return undefined;
-  }
-  var default_agent = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36';
-  //'&view=detailv2' enlarges pic
-  var roptions = {
-    'url': 'https://www.bing.com/images/search?q=%&view=detailv2'.replace('%', encodeURIComponent(options.keyword)),
-    'User-Agent': default_agent
-  };
-
+var getBingImages = function(searchword) {
+  var urls = [];
   //sample clean url: https://www.bing.com/images/search?q=dogs&view=detailv2&selectedindex=5
-
-  //return extract(roptions.url, num);
-  var fullurl, pic;
-  for (var i = 0; i < options.num; i++) {
-    fullurl = roptions.url + '&selectedindex=' + i.toString();
-    console.log(fullurl);
-    pic = extract(fullurl, default_agent);
-    if (pic) {
-      results.push(pic);
-    }
-  }
+  var url = 'https://www.bing.com/images/search?q=%&view=detailv2'.replace('%', encodeURIComponent(searchword)) + '&selectedindex=0';
+  console.log(url);
+  urls = extractPicUrls(url);
   return results;
 }
 
-var extract = function(url, agent) {
+//extract all pic urls
+var extractPicUrls = function(url) {
+  var urls = [];
   request(url, function(err, res, body) {
     if (err)
       console.log(err);
     else {
       if (res.statusCode !== 200)
         console.log(res);
-      else
-        console.log(body);
+      else {
+
+        console.log('okay: body');
+        const $ = cheerio.load(body);
+        var images = $('img');
+        for (var i = 0; i < images.length; i++) {
+          var link = $(images[i]).attr('src');
+          if (link.substr(0, 4) !== 'http')
+            continue;
+          urls.push(link);
+        }
+        console.log(urls);
+      }
     }
   });
 }
 
 var Scraper = module.exports;
-Scraper.extract = extract;
 Scraper.getBingImages = getBingImages;
