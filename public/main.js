@@ -3,9 +3,13 @@ this.picArray = [];
 //submit button
 var submitWord = function() {
   this.word = $('#wordinput').val();
-  console.log(this.word);
   //moveProgressBar();
-  getImages(this.word);
+  $.post('/', {
+    word: this.word
+  }, function(res) {
+
+  });
+  //getImages(this.word);
 }
 
 // progress bar
@@ -22,13 +26,4 @@ function moveProgressBar() {
   $('.progress-bar').animate({
     left: progressTotal
   }, animationLength);
-}
-
-//get google images
-var getImages = function(searchword) {
-  this.picArray = getBingImages({
-    keyword: searchword,
-    num: 5,
-    details: false
-  });
 }
