@@ -33,7 +33,8 @@ var extract = function(url, agent) {
   $.ajax({
     url: url,
     headers: {
-      'User-Agent': agent
+      "X-Requested-With": "XMLHttpRequest",
+      "Access-Control-Allow-Origin": "*"
     },
     success: function(res) {
       console.log(res);

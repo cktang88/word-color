@@ -5,7 +5,13 @@
 
 ## Try it out!
 
-Go ahead. Type in a word. Get its associated color palette. :fire: Try it [here](https://greenlantern101.github.io/word-color/)
+```
+$ npm install
+$ npm start
+```
+Go to http://localhost:/8000 in your browser.
+
+Go ahead. Type in a word. Get its associated color palette. :fire:
 
 ## How it works
 
