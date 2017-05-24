@@ -37,10 +37,16 @@ app.post('/', function(req, res) {
         console.log("Bad image path")
         return;
       }
+      var p = pixels.data;
       //pixels is an 'ndarray' --> pixels.data = converts to 1d array
-      console.log("got pixels", pixels.data);
-      console.log(pixels.data[0]);
-      var palette = quantizer.quantize(pixels.data, 8).palette();
+      //[r1, g1, b1, a1, r2, g2, b2, a2, ...]
+      //convert 1d array to array of arrays
+      var finalpixels = [];
+      for (var i = 0; i < p.length; i += 4) {
+        finalpixels.push(p.slice(i, i + 4));
+      }
+      console.log('%s final pixels.', finalpixels.length);
+      var palette = quantizer.quantize(finalpixels, 8).palette();
       console.log(palette);
     });
   });
