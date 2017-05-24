@@ -6,14 +6,22 @@
   <meta http-equiv='X-UA-Compatible' , content='IE=edge'>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name='description' , content='Focal News'>
-  <title>Focal News</title>
+  <title>Word Color</title>
   <link rel='stylesheet' , href='https://fonts.googleapis.com/css?family=Roboto'>
 </head>
 
 <body>
+  Word Color
   <div>
-
+    <input id='wordinput'></input>
+    <button id='wordbutton' onclick='submitWord()'>Colorize!</button>
+    <div class="progress-wrap progress" progress-percent="50">
+      <div class="progress-bar progress"></div>
+    </div>
   </div>
+  <!--- lightweight alternative to jQuery -->
+  <script src='http://zeptojs.com/zepto.min.js'></script>
+  <script src='scrape.js'></script>
   <script src='quantize.js'></script>
   <script src='main.js'></script>
 </body>
@@ -22,5 +30,28 @@
 
 
 <style>
+  body {
+    font-family: Roboto;
+    font-size: 16pt;
+    background-color: #e6e6e6;
+  }
 
+  .progress {
+    width: 100%;
+    height: 10px;
+  }
+
+  .progress-wrap {
+    background: #f80;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar {
+    background: #ddd;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
 </style>
