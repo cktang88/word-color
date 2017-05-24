@@ -34,10 +34,14 @@ function refreshColors() {
       //get the colors from each palette
       for (var j = 0; j < arr.length; j++) {
         //console.log(arr[j]);
+        //sort roughly by darkness
+        arr.sort(function(a, b) {
+          return -(a[0] + a[1] + a[2] - b[0] - b[1] - b[2]);
+        });
         c = arr[j];
         ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
         //console.log(ctx.fillStyle);
-        ctx.fillRect(i * 40, j * 40, 40, 30);
+        ctx.fillRect(i * 40, j * 40, 40, 40);
         ctx.fill();
       }
     }
