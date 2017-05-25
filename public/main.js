@@ -11,7 +11,11 @@ $('#wordinput').keyup(function(e) {
 
 //submit button
 var submitWord = function() {
-  this.word = $('#wordinput').val();
+  var temp = $('#wordinput').val();
+  if (temp === this.word)
+    return;
+  else
+    this.word = temp;
   //moveProgressBar();
   $.post('/', {
     word: this.word
@@ -32,6 +36,10 @@ function refreshColors() {
     //console.log(res.data);
     if (!res.data || res.data === [])
       return;
+
+    //max 20 elements
+    if (res.data.length > 20)
+      res.data = res.data.splice(20);
 
     //dynamically resize canvas
     canvas.width = res.data.length * 40;
