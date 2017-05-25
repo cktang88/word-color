@@ -1,5 +1,4 @@
 this.word = '';
-this.picArray = [];
 
 //submit word on enter key, prevent multiple submits on one key event
 $('#wordinput').keyup(function(e) {
@@ -12,29 +11,54 @@ $('#wordinput').keyup(function(e) {
 //submit button
 var submitWord = function() {
   var temp = $('#wordinput').val();
+  //ensure same word is not submitted multiple times
   if (temp === this.word)
     return;
   else
     this.word = temp;
+
   //moveProgressBar();
+  //send post AJAX request to server
   $.post('/', {
     word: this.word
   }, function(res) {
     console.log(res.numImages);
   });
-  //wait for server a bit
+  //wait for server response a bit
   setInterval(refreshColors, 2000);
-  //getImages(this.word);
 }
+//global variable to keep track of all colors
 var colors;
+//setup canvas
+var canvas = $('canvas')[0];
+var ctx = canvas.getContext('2d');
 
-function refreshColors() {
-  var canvas = $('canvas')[0];
-  var ctx = canvas.getContext('2d');
+canvas.addEventListener('mousemove', function(evt) {
+  var mousePos = getMousePos(canvas, evt);
+  var x = mousePos.x;
+  var y = mousePos.y;
+  var rgb = colors[Math.floor(x / 40)][Math.floor(y / 40)];
+  var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+  //the 1<<24 takes care of zero-padding as necessary
+  //from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb, by Mark Kahn (comment to casablanca's answer)
+  var hexColor = '#' + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).substr(1);
+  $('#colorinfo').text(message + '\n' + hexColor);
+}, false);
 
+function getMousePos(canvas, evt) {
+  var rect = canvas.getBoundingClientRect();
+  return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+  };
+}
+
+var refreshColors = function() {
+
+  //get JSON data from server endpoint
   $.getJSON('/palettes', function(res) {
     //console.log(res.data);
-    if (!res.data || res.data === [])
+    if (!res.data || !res.data[0])
       return;
 
     //max 20 elements
@@ -61,12 +85,12 @@ function refreshColors() {
             db = a[2] - b[2];
           //var lumdist = Math.abs(luminosity(a) - luminosity(b));
           /*
-                    if (Math.abs(greenness(a) - greenness(b)) > 128)
-                      return -greenness(a) + greenness(b);
-                    if (Math.abs(redness(a) - redness(b)) > 128)
-                      return -redness(a) + redness(b);
-                    if (Math.abs(blueness(a) - blueness(b)) > 128)
-                      return -blueness(a) + blueness(b);
+          if (Math.abs(greenness(a) - greenness(b)) > 128)
+            return -greenness(a) + greenness(b);
+          if (Math.abs(redness(a) - redness(b)) > 128)
+            return -redness(a) + redness(b);
+          if (Math.abs(blueness(a) - blueness(b)) > 128)
+            return -blueness(a) + blueness(b);
           */
           //default
           return -luminosity(a) + luminosity(b);
@@ -77,36 +101,13 @@ function refreshColors() {
         });
         c = arr[j];
         ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
-        //console.log(ctx.fillStyle);
         ctx.fillRect(i * 40, j * 40, 40, 40);
         ctx.fill();
       }
     }
-
+    //update global variable
     colors = res.data;
-
   });
-
-  function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-  }
-
-  canvas.addEventListener('mousemove', function(evt) {
-    var mousePos = getMousePos(canvas, evt);
-    var x = mousePos.x;
-    var y = mousePos.y;
-    var rgb = colors[Math.floor(x / 40)][Math.floor(y / 40)];
-    var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
-    //the 1<<24 takes care of zero-padding as necessary
-    //from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb, by Mark Kahn (comment to casablanca's answer)
-    var hexColor = '#' + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).substr(1);
-    $('#colorinfo').text(message + '\n' + hexColor);
-  }, false);
-
 }
 
 function greenness(pixel) {
@@ -139,6 +140,7 @@ function luminosity(pixel) {
 }
 
 //inspired by http://www.alanzucconi.com/2015/09/30/colour-sorting/
+//attempts to calculate a sorting key that allows smooth color separations
 function sortkeyOf(pixel) {
   var repetitions = 8;
   var r = pixel[0];
@@ -163,6 +165,7 @@ function sortkeyOf(pixel) {
   return [h2, lum, v2];
 }
 
+//convert color from RGB to HSV values, used in color sorting
 function rgb2hsv(r, g, b) {
   var computedH = 0;
   var computedS = 0;
