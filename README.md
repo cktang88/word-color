@@ -2,10 +2,10 @@
 
 :art: :zap: Creates word-color associations.
 
-![Coconut]('./pics/_coconut.PNG')
-![Camoflage]('./pics/_camoflage.PNG')
-![Trophy]('./pics/_trophy.PNG')
-![American flag]('./pics/_usflag.PNG')
+![Coconut]('pics/_coconut.PNG')
+![Camoflage]('pics/_camoflage.PNG')
+![Trophy]('pics/_trophy.PNG')
+![American flag]('pics/_usflag.PNG')
 
 ## Try it out!
 
