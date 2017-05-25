@@ -1,7 +1,13 @@
 this.word = '';
 this.picArray = [];
 
-
+//submit word on enter key
+$('#wordinput').keypress(function(e) {
+  //if enter key pressed
+  if (e.which === 10 || e.which === 13) {
+    submitWord();
+  }
+});
 
 //submit button
 var submitWord = function() {
