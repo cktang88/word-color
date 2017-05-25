@@ -2,10 +2,12 @@
 
 :art: :zap: Creates word-color associations.
 
-![Coconut]('pics/_coconut.PNG')
-![Camoflage]('pics/_camoflage.PNG')
-![Trophy]('pics/_trophy.PNG')
-![American flag]('pics/_usflag.PNG')
+> Examples:
+<br></br>
+<img src='https://github.com/GreenLantern101/word-color/blob/master/pics/_camoflage.PNG'></img>
+<img src='https://github.com/GreenLantern101/word-color/blob/master/pics/_coconut.PNG'></img>
+<img src='https://github.com/GreenLantern101/word-color/blob/master/pics/_trophy.PNG'></img>
+<img src='https://github.com/GreenLantern101/word-color/blob/master/pics/_usflag.PNG'></img>
 
 ## Try it out!
 
