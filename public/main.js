@@ -16,10 +16,12 @@ var submitWord = function() {
   setInterval(refreshColors, 2000);
   //getImages(this.word);
 }
+var colors;
 
 function refreshColors() {
   var canvas = $('canvas')[0];
   var ctx = canvas.getContext('2d');
+
   $.getJSON('/palettes', function(res) {
     //console.log(res.data);
     if (!res.data || res.data === [])
@@ -67,7 +69,30 @@ function refreshColors() {
       }
     }
 
+    colors = res.data;
+
   });
+
+  function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+
+  canvas.addEventListener('mousemove', function(evt) {
+    var mousePos = getMousePos(canvas, evt);
+    var x = mousePos.x;
+    var y = mousePos.y;
+    var rgb = colors[Math.floor(x / 40)][Math.floor(y / 40)];
+    var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    //the 1<<24 takes care of zero-padding as necessary
+    //from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb, by Mark Kahn (comment to casablanca's answer)
+    var hexColor = '#' + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).substr(1);
+    $('#colorinfo').text(message + '\n' + hexColor);
+  }, false);
+
 }
 
 function greenness(pixel) {
