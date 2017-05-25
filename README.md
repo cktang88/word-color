@@ -1,7 +1,11 @@
 # word-color
 
 :art: :zap: Creates word-color associations.
-***<pic here>***
+
+![Coconut]('./pics/_coconut.PNG')
+![Camoflage]('./pics/_camoflage.PNG')
+![Trophy]('./pics/_trophy.PNG')
+![American flag]('./pics/_usflag.PNG')
 
 ## Try it out!
 
