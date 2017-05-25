@@ -44,7 +44,15 @@ function refreshColors() {
             dg = a[1] - b[1],
             db = a[2] - b[2];
           //var lumdist = Math.abs(luminosity(a) - luminosity(b));
-if(Math.abs(dr))
+          /*
+                    if (Math.abs(greenness(a) - greenness(b)) > 128)
+                      return -greenness(a) + greenness(b);
+                    if (Math.abs(redness(a) - redness(b)) > 128)
+                      return -redness(a) + redness(b);
+                    if (Math.abs(blueness(a) - blueness(b)) > 128)
+                      return -blueness(a) + blueness(b);
+          */
+          //default
           return -luminosity(a) + luminosity(b);
           //if (lumdist > .5)
           //return -(dr + dg + db);
@@ -60,6 +68,30 @@ if(Math.abs(dr))
     }
 
   });
+}
+
+function greenness(pixel) {
+  var r = pixel[0];
+  var g = pixel[1];
+  var b = pixel[2];
+
+  return g - r - b;
+}
+
+function redness(pixel) {
+  var r = pixel[0];
+  var g = pixel[1];
+  var b = pixel[2];
+
+  return r - g - b;
+}
+
+function blueness(pixel) {
+  var r = pixel[0];
+  var g = pixel[1];
+  var b = pixel[2];
+
+  return b - g - r;
 }
 
 //get luminosity from RGB, 0 to 1
