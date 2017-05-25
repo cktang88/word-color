@@ -1,8 +1,8 @@
 this.word = '';
 this.picArray = [];
 
-//submit word on enter key
-$('#wordinput').keypress(function(e) {
+//submit word on enter key, prevent multiple submits on one key event
+$('#wordinput').keyup(function(e) {
   //if enter key pressed
   if (e.which === 10 || e.which === 13) {
     submitWord();
