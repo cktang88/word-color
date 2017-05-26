@@ -1,6 +1,6 @@
 var express = require('express'),
   app = express(),
-  port = 8000;
+  port = process.env.PORT || 8000;
 
 var bodyParser = require('body-parser');
 var Scraper = require('./scrape.js'),
