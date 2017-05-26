@@ -1,4 +1,21 @@
+var socket = io();
+socket.on('connect', function() {
+  console.log('connected to server.');
+});
+socket.on('disconnect', function() {
+  console.log('disconnected.');
+});
+
+//global variable to keep track of all colors
+const numPalettes = 20;
+var colors = Array(numPalettes);
 this.word = '';
+//setup canvas
+var canvas = $('canvas')[0];
+var ctx = canvas.getContext('2d');
+
+canvas.width = numPalettes * 40;
+canvas.height = 7 * 40;
 
 //submit word on enter key, prevent multiple submits on one key event
 $('#wordinput').keyup(function(e) {
@@ -14,24 +31,17 @@ var submitWord = function() {
   //ensure same word is not submitted multiple times
   if (temp === this.word)
     return;
-  else
-    this.word = temp;
 
-  //moveProgressBar();
-  //send post AJAX request to server
-  $.post('/', {
-    word: this.word
-  }, function(res) {
-    console.log(res.numImages);
-  });
-  //wait for server response a bit
-  setInterval(refreshColors, 2000);
+  this.word = temp;
+  socket.emit('newword', this.word);
 }
-//global variable to keep track of all colors
-var colors;
-//setup canvas
-var canvas = $('canvas')[0];
-var ctx = canvas.getContext('2d');
+
+//NOTE: websockets do not guarantee that info arrives in same order it was sent
+//nor does server send info in series in order
+socket.on('data', function(data) {
+  //console.log(data);
+  draw(data.num, data.palette);
+});
 
 canvas.addEventListener('mousemove', function(evt) {
   var mousePos = getMousePos(canvas, evt);
@@ -53,60 +63,52 @@ function getMousePos(canvas, evt) {
   };
 }
 
-var refreshColors = function() {
+function draw(n, newestPalette) {
+  //clear colors for each new word
+  if (colors.length > numPalettes)
+    colors = [];
 
-  //get JSON data from server endpoint
-  $.getJSON('/palettes', function(res) {
-    //console.log(res.data);
-    if (!res.data || !res.data[0])
-      return;
+  colors[n] = newestPalette;
+  var arr, c;
+  for (var i = 0; i < colors.length; i++) {
+    arr = colors[i];
+    if (!arr)
+      continue;
+    sortColors(arr);
+    //get the colors from each palette
+    for (var j = 0; j < arr.length; j++) {
+      //console.log(arr[j]);
 
-    //max 20 elements
-    if (res.data.length > 20)
-      res.data = res.data.splice(20);
-
-    //dynamically resize canvas
-    canvas.width = res.data.length * 40;
-    canvas.height = res.data[0].length * 40;
-
-    //get the palettes
-    var arr, c;
-    for (var i = 0; i < res.data.length; i++) {
-      arr = res.data[i];
-      if (!arr)
-        continue;
-      //get the colors from each palette
-      for (var j = 0; j < arr.length; j++) {
-        //console.log(arr[j]);
-        //sort roughly by darkness
-        arr.sort(function(a, b) {
-          var dr = a[0] - b[0],
-            dg = a[1] - b[1],
-            db = a[2] - b[2];
-          //var lumdist = Math.abs(luminosity(a) - luminosity(b));
-          /*
-          if (Math.abs(greenness(a) - greenness(b)) > 128)
-            return -greenness(a) + greenness(b);
-          if (Math.abs(redness(a) - redness(b)) > 128)
-            return -redness(a) + redness(b);
-          if (Math.abs(blueness(a) - blueness(b)) > 128)
-            return -blueness(a) + blueness(b);
-          */
-          //default
-          return -luminosity(a) + luminosity(b);
-          //if (lumdist > .5)
-          //return -(dr + dg + db);
-          //else
-          //return sortkeyOf(a)[0] - sortkeyOf(b)[0];
-        });
-        c = arr[j];
-        ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
-        ctx.fillRect(i * 40, j * 40, 40, 40);
-        ctx.fill();
-      }
+      //console.log(arr);
+      c = arr[j];
+      ctx.fillStyle = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+      ctx.fillRect(i * 40, j * 40, 40, 40);
+      ctx.fill();
     }
-    //update global variable
-    colors = res.data;
+  }
+}
+
+function sortColors(pixelArr) {
+  //sort roughly by darkness
+  pixelArr.sort(function(a, b) {
+    var dr = a[0] - b[0],
+      dg = a[1] - b[1],
+      db = a[2] - b[2];
+    //var lumdist = Math.abs(luminosity(a) - luminosity(b));
+    /*
+    if (Math.abs(greenness(a) - greenness(b)) > 128)
+      return -greenness(a) + greenness(b);
+    if (Math.abs(redness(a) - redness(b)) > 128)
+      return -redness(a) + redness(b);
+    if (Math.abs(blueness(a) - blueness(b)) > 128)
+      return -blueness(a) + blueness(b);
+    */
+    //default
+    return -luminosity(a) + luminosity(b);
+    //if (lumdist > .5)
+    //return -(dr + dg + db);
+    //else
+    //return sortkeyOf(a)[0] - sortkeyOf(b)[0];
   });
 }
 
