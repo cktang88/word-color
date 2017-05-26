@@ -35,7 +35,6 @@ io.set("transports", ["polling"]);
 
 io.on('connection', function(socket) {
   console.log('new connection.');
-  var data = {};
   // emit an event to the socket
   //socket.emit('request', data);
   // emit an event to all connected sockets

@@ -11,11 +11,22 @@ const numPalettes = 20;
 var colors = Array(numPalettes);
 this.word = '';
 //setup canvas
-var canvas = $('canvas')[0];
-var ctx = canvas.getContext('2d');
-
+var canvas = $('#canvas')[0];
 canvas.width = numPalettes * 40;
 canvas.height = 7 * 40;
+var ctx = canvas.getContext('2d');
+//mini canvas
+var ctx2 = $('#canvas2')[0].getContext('2d');
+
+//draws border given canvas context
+var drawBorder = function(context) {
+  context.strokeStyle = '#000000';
+  context.lineWidth = 3;
+  context.rect(0, 0, context.canvas.width, context.canvas.height);
+  context.stroke();
+}
+//drawBorder(ctx2);
+//drawBorder(ctx);
 
 //submit word on enter key, prevent multiple submits on one key event
 $('#wordinput').keyup(function(e) {
@@ -47,14 +58,20 @@ canvas.addEventListener('mousemove', function(evt) {
   var mousePos = getMousePos(canvas, evt);
   var x = mousePos.x;
   var y = mousePos.y;
-  if (!colors)
+  var column = colors[Math.floor(x / 40)];
+  if (!column)
     return;
-  var rgb = colors[Math.floor(x / 40)][Math.floor(y / 40)];
-  var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+  var rgb = column[Math.floor(y / 40)];
+  //var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
   //the 1<<24 takes care of zero-padding as necessary
   //from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb, by Mark Kahn (comment to casablanca's answer)
   var hexColor = '#' + ((1 << 24) + (rgb[0] << 16) + (rgb[1] << 8) + rgb[2]).toString(16).substr(1);
-  $('#colorinfo').text(message + '\n' + hexColor);
+  $('#colorinfo').text(hexColor);
+  //update color
+  ctx2.fillStyle = hexColor;
+  ctx2.fillRect(0, 0, 100, 100);
+  ctx2.fill();
+  //drawBorder(ctx2);
 }, false);
 
 function getMousePos(canvas, evt) {
@@ -88,6 +105,7 @@ function draw(n, newestPalette) {
       ctx.fill();
     }
   }
+  //drawBorder(ctx);
 }
 
 function sortColors(pixelArr) {
