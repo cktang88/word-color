@@ -47,6 +47,8 @@ canvas.addEventListener('mousemove', function(evt) {
   var mousePos = getMousePos(canvas, evt);
   var x = mousePos.x;
   var y = mousePos.y;
+  if (!colors)
+    return;
   var rgb = colors[Math.floor(x / 40)][Math.floor(y / 40)];
   var message = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
   //the 1<<24 takes care of zero-padding as necessary
