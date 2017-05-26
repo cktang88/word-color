@@ -10,7 +10,9 @@
 <img src='https://github.com/GreenLantern101/word-color/blob/master/pics/_usflag.PNG'></img>
 
 ## Try it out!
+[Live Demo](https://word-color1.herokuapp.com/)
 
+Or locally:
 ```
 $ npm install
 $ npm start
@@ -22,6 +24,6 @@ Go ahead. Type in a word. Get its associated color palette. :fire:
 ## How it works
 
 1. Scrapes top images of the word from search engines.
-2. For each image, use [MMCQ (modified median cut quantization)](https://en.wikipedia.org/wiki/Median_cut)) to extract a palette of dominant colors.
+2. For each image, use [MMCQ (modified median cut quantization)](https://en.wikipedia.org/wiki/Median_cut) to extract a palette of dominant colors.
 3. Average palettes of all images to get final palette.
-4. Obviously going to be [very very slow](https://giphy.com/gifs/disneyzootopia-l2JHVUriDGEtWOx0c). Don't worry, optimizations are coming.
+4. Somewhat [slow](https://giphy.com/gifs/disneyzootopia-l2JHVUriDGEtWOx0c). Don't worry, optimizations are coming.
