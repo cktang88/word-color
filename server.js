@@ -11,7 +11,7 @@ var Scraper = require('./scrape.js'),
   quantizer = require('./quantize.js');
 
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var io = require('socket.io').listen(server);
 
 //serves all static files in /public
 app.use(express.static(__dirname + '/public'));
@@ -28,6 +28,10 @@ app.use(bodyParser.json({
 server.listen(port, function() {
   console.log('Listening on port ' + port);
 });
+
+io.set("transports", ["polling"]);
+//io.set("polling duration", 10);
+
 
 io.on('connection', function(socket) {
   console.log('new connection.');
