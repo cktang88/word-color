@@ -1,0 +1,11 @@
+{
+	"extends": "airbnb-base",
+	"plugins": [
+		"import"
+	],
+	"rules": {
+		// babel inserts `'use strict';` for es6 modules, but not regular code...
+		// so might not be necessary, but don't remove
+		"strict": 0
+	}
+}

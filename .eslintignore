@@ -1,0 +1,5 @@
+# /node_modules/* and /bower_components/* ignored by default
+
+# Ignore minified lib files
+public/lib/**
+logs/

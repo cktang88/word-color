@@ -5,18 +5,19 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --fix **/*.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GreenLantern101/word-color.git"
+    "url": "git+https://github.com/cktang88/word-color.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GreenLantern101/word-color/issues"
+    "url": "https://github.com/cktang88/word-color/issues"
   },
-  "homepage": "https://github.com/GreenLantern101/word-color#readme",
+  "homepage": "https://github.com/cktang88/word-color#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
@@ -26,5 +27,10 @@
     "nodemon": "^1.11.0",
     "request": "^2.81.0",
     "socket.io": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.6.0"
   }
 }
