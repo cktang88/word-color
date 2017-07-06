@@ -7,7 +7,7 @@ const port = process.env.PORT || 8000;
 const Promises = require('bluebird');
 
 const bodyParser = require('body-parser');
-const Scraper = require('./scrape.js');
+const getImages = require('./scrape.js');
 const getPixels = require('get-pixels');
 const quantizer = require('./quantize.js');
 
@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
 });
 
 function processWord(word, socket) {
-  Scraper.getImages(word, (urls) => {
+  getImages(word).then((urls) => {
     console.log(`${urls.length} images found.`);
     const num = Math.min(20, urls.length);
     for (let i = 0; i < num; i++) {
