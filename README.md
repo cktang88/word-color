@@ -26,4 +26,3 @@ Go ahead. Type in a word. Get its associated color palette. :fire:
 1. Scrapes top images of the word from search engines.
 2. For each image, use [MMCQ (modified median cut quantization)](https://en.wikipedia.org/wiki/Median_cut) to extract a palette of dominant colors.
 3. Average palettes of all images to get final palette.
-4. Somewhat [slow](https://giphy.com/gifs/disneyzootopia-l2JHVUriDGEtWOx0c). Don't worry, optimizations are coming.
