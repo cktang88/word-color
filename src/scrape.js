@@ -1,6 +1,6 @@
-const rp = require('request-promise');
-const cheerio = require('cheerio');
-const Promise = require('bluebird');
+import needle from 'needle';
+// const cheerio = require('cheerio');
+// import Promise from 'bluebird';
 /**
  * Get the image src for all links, options.keyword is required.
  */
@@ -14,8 +14,8 @@ const getImages = (searchword) => {
 
 // private helper method
 // extract all pic urls from url
-const extractPicUrls = url => rp(url)
-  .then((body) => {
+const extractPicUrls = url => needle.get(url)
+  .then((err, {body}) => {
     // console.log('finding image urls...');
     const $ = cheerio.load(body);
     // array of images returned
@@ -30,5 +30,4 @@ const extractPicUrls = url => rp(url)
     console.log(err);
   });
 
-// TODO: simplify
-module.exports = getImages;
+export default getImages;

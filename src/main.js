@@ -1,4 +1,5 @@
 import $ from './domhelpers'
+import processWord from './processor'
 
 // global variable to keep track of all colors
 const numPalettes = 20;
@@ -38,7 +39,7 @@ const submitWord = function () {
   if (temp === window.word) { return; }
 
   window.word = temp;
-  // TODO: post request
+  processWord(window.word);
   // on complete: draw(data.num, data.palette);
   // socket.emit('newword', window.word);
 };

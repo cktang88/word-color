@@ -1,11 +1,6 @@
-const getImages = require('./scrape.js');
+import getImages from './scrape';
 const getPixels = require('get-pixels');
 const quantizer = require('./quantize.js');
-
-// whenever word submitted
-let onSubmit = (word) => {
-  processWord(word);
-}
 
 function processWord(word) {
   getImages(word).then((urls) => {
@@ -43,3 +38,4 @@ function processImage(url, i) {
     });
   });
 }
+export default processWord;

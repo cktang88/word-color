@@ -18,10 +18,9 @@
   },
   "homepage": "https://github.com/cktang88/word-color#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "color-sort": "0.0.1",
     "get-pixels": "^3.3.0",
-    "parcel-bundler": "^1.7.1",
-    "start": "^5.1.0"
+    "needle": "^2.2.0",
+    "parcel-bundler": "^1.7.1"
   }
 }
