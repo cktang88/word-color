@@ -104,6 +104,8 @@ function draw(n, newestPalette) {
   // drawBorder(ctx);
 }
 
+// TODO: replace with color-sort npm package
+// https://www.npmjs.com/package/color-sort
 function sortColors(pixelArr) {
   // sort roughly by darkness
   pixelArr.sort((a, b) => {
@@ -128,44 +130,21 @@ function sortColors(pixelArr) {
   });
 }
 
-function greenness(pixel) {
-  const r = pixel[0];
-  const g = pixel[1];
-  const b = pixel[2];
-
-  return g - r - b;
-}
-
-function redness(pixel) {
-  const r = pixel[0];
-  const g = pixel[1];
-  const b = pixel[2];
-
-  return r - g - b;
-}
-
-function blueness(pixel) {
-  const r = pixel[0];
-  const g = pixel[1];
-  const b = pixel[2];
-
-  return b - g - r;
-}
+const greenness = ([r, g, b]) => g - r - b;
+const redness = ([r, g, b]) => r - g - b;
+const blueness = ([r, g, b]) => b - g - r;
 
 // get luminosity from RGB, 0 to 1
-function luminosity(pixel) {
-  return Math.sqrt(0.241 * pixel[0] + 0.691 * pixel[1] + 0.068 * pixel[2]);
+function luminosity([r, g, b]) {
+  return Math.sqrt(0.241 * r + 0.691 * g + 0.068 * b);
 }
 
 // inspired by http://www.alanzucconi.com/2015/09/30/colour-sorting/
 // attempts to calculate a sorting key that allows smooth color separations
-function sortkeyOf(pixel) {
+function sortkeyOf([r, g, b]) {
   const repetitions = 8;
-  const r = pixel[0];
-  const g = pixel[1];
-  const b = pixel[2];
 
-  let lum = luminosity(pixel);
+  let lum = luminosity([r, g, b]);
 
   const hsv = rgb2hsv(r, g, b);
   let h = hsv[0],
