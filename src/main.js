@@ -1,17 +1,9 @@
-/*
-const socket = io();
-socket.on('connect', () => {
-  console.log('connected to server.');
-});
-socket.on('disconnect', () => {
-  console.log('disconnected.');
-});
-*/
+import $ from './domhelpers'
 
 // global variable to keep track of all colors
 const numPalettes = 20;
 let colors = Array(numPalettes);
-this.word = '';
+window.word = '';
 // setup canvas
 const canvas = $('#canvas');
 canvas.width = numPalettes * 40;
@@ -39,16 +31,16 @@ $('#wordinput').onkeyup = (e) => {
 };
 
 // submit button
-var submitWord = function () {
+const submitWord = function () {
   const temp = $('#wordinput').value.trim();
   console.log('Submitted: ' + temp);
   // ensure same word is not submitted multiple times
-  if (temp === this.word) { return; }
+  if (temp === window.word) { return; }
 
-  this.word = temp;
+  window.word = temp;
   // TODO: post request
   // on complete: draw(data.num, data.palette);
-  // socket.emit('newword', this.word);
+  // socket.emit('newword', window.word);
 };
 
 // NOTE: websockets do not guarantee that info arrives in same order it was sent

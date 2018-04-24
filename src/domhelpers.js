@@ -18,3 +18,4 @@ const $ = str => {
       return nodes.length > 1 ? nodes : nodes[0]; // returns 1 elem, or list of elements
   }
 };
+export default $
