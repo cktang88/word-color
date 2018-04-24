@@ -18,10 +18,12 @@
 <img src='pics/_usflag.PNG'></img>
 
 ## Try it out!
-[Live Demo](wordcolor.netlify.com)
+[Live Demo](https://wordcolor.netlify.com/)
 
 Or locally:
 ```
+$ git clone https://github.com/cktang88/word-color
+$ cd word-color
 $ npm i
 $ npm start
 ```
