@@ -2,6 +2,14 @@
 
 :art: :zap: Creates word-color associations.
 
+### TODO:
+1. make all client-side, no server --> use parcel
+    - problem: can't use cheerio front-end, need to replace somehow...
+2. possibly implement caching via online JSON storage solution
+3. use https://www.npmjs.com/package/color-sort to display results
+
+
+
 > Examples:
 <br></br>
 <img src='/pics/_camoflage.PNG'></img>
@@ -26,8 +34,3 @@ Go ahead. Type in a word. Get its associated color palette. :fire:
 1. Scrapes top images of the word from search engines.
 2. For each image, use [MMCQ (modified median cut quantization)](https://en.wikipedia.org/wiki/Median_cut) to extract a palette of dominant colors.
 3. Average palettes of all images to get final palette.
-
-## Dev
-
-/public - contains front-end
-server.js - api server only

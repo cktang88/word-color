@@ -1,10 +1,10 @@
 {
   "name": "word-color",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": ":art: :zap: Creates word-color associations.\r ***<pic here>***",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "parcel ./src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,10 +19,9 @@
   "homepage": "https://github.com/cktang88/word-color#readme",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "body-parser": "^1.17.2",
-    "cheerio": "^0.22.0",
-    "express": "^4.15.3",
+    "color-sort": "0.0.1",
     "get-pixels": "^3.3.0",
-    "nodemon": "^1.11.0"
+    "parcel-bundler": "^1.7.1",
+    "start": "^5.1.0"
   }
 }
