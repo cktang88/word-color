@@ -40,7 +40,8 @@ $('#wordinput').onkeyup = (e) => {
 
 // submit button
 var submitWord = function () {
-  const temp = $('#wordinput').val();
+  const temp = $('#wordinput').value.trim();
+  console.log('Submitted: ' + temp);
   // ensure same word is not submitted multiple times
   if (temp === this.word) { return; }
 
