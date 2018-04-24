@@ -13,12 +13,12 @@ const numPalettes = 20;
 let colors = Array(numPalettes);
 this.word = '';
 // setup canvas
-const canvas = $('#canvas')[0];
+const canvas = $('#canvas');
 canvas.width = numPalettes * 40;
 canvas.height = 7 * 40;
 const ctx = canvas.getContext('2d');
 // mini canvas
-const ctx2 = $('#canvas2')[0].getContext('2d');
+const ctx2 = $('#canvas2').getContext('2d');
 
 // draws border given canvas context
 const drawBorder = function (context) {
@@ -31,12 +31,12 @@ const drawBorder = function (context) {
 // drawBorder(ctx);
 
 // submit word on enter key, prevent multiple submits on one key event
-$('#wordinput').keyup((e) => {
+$('#wordinput').onkeyup = (e) => {
   // if enter key pressed
   if (e.which === 10 || e.which === 13) {
     submitWord();
   }
-});
+};
 
 // submit button
 var submitWord = function () {
