@@ -4,7 +4,7 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 // for promises
-const Promises = require('bluebird');
+// const Promises = require('bluebird');
 
 const bodyParser = require('body-parser');
 const getImages = require('./scrape.js');
@@ -12,10 +12,10 @@ const getPixels = require('get-pixels');
 const quantizer = require('./quantize.js');
 
 const server = require('http').Server(app);
-const io = require('socket.io').listen(server);
+// const io = require('socket.io').listen(server);
 
 // serves all static files in /public
-app.use(express.static(`${__dirname}/public`));
+// app.use(express.static(`${__dirname}/public`));
 
 // for post
 app.use(bodyParser.urlencoded({
@@ -30,10 +30,10 @@ server.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-io.set('transports', ['polling']);
+// io.set('transports', ['polling']);
 // io.set("polling duration", 10);
 
-
+/*
 io.on('connection', (socket) => {
   console.log('new connection.');
   // emit an event to the socket
@@ -49,6 +49,12 @@ io.on('connection', (socket) => {
     console.log('user disconnected.');
   });
 });
+*/
+
+server.on('/', 'POST', (req)=>{
+  console.log(word)
+  processWord(word, socket);
+})
 
 function processWord(word, socket) {
   getImages(word).then((urls) => {

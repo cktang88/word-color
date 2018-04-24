@@ -1,3 +1,4 @@
+/*
 const socket = io();
 socket.on('connect', () => {
   console.log('connected to server.');
@@ -5,6 +6,7 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
   console.log('disconnected.');
 });
+*/
 
 // global variable to keep track of all colors
 const numPalettes = 20;
@@ -43,15 +45,19 @@ var submitWord = function () {
   if (temp === this.word) { return; }
 
   this.word = temp;
-  socket.emit('newword', this.word);
+  // TODO: post request
+  // on complete: draw(data.num, data.palette);
+  // socket.emit('newword', this.word);
 };
 
 // NOTE: websockets do not guarantee that info arrives in same order it was sent
 // nor does server send info in series in order
+/*
 socket.on('data', (data) => {
   // console.log(data);
   draw(data.num, data.palette);
 });
+*/
 
 canvas.addEventListener('mousemove', (evt) => {
   const mousePos = getMousePos(canvas, evt);
