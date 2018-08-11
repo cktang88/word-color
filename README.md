@@ -1,5 +1,7 @@
 # word-color
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cktang88/word-color.svg)](https://greenkeeper.io/)
+
 :art: :zap: Creates word-color associations.
 
 ### TODO:
